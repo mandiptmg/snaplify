@@ -1,54 +1,58 @@
 'use client'
-// components/AuthComponent.tsx
 import { useSession, signOut } from 'next-auth/react'
-import Image from 'next/image'
 import Link from 'next/link'
+import Image from 'next/image'
+import { FaChevronCircleDown, FaRegUser } from 'react-icons/fa'
 import { useState } from 'react'
-import { FaRegUser } from 'react-icons/fa'
-function AuthComponent() {
-  const { data: session } = useSession()
+const AuthComponent = () => {
   const [active, setActive] = useState(false)
-
+  const { data: session } = useSession()
   if (session) {
-    const Image = session.user?.image || 'User'
     return (
-      <>
-        <div className='relative'>
+      <div className='relative cursor-pointer'>
+        <div
+          onClick={() => {
+            setActive(!active)
+            setTimeout(() => {
+              setActive(false) // Assuming setActive is a state setter function
+            }, 4000)
+          }}
+          className='flex group items-center gap-1'
+        >
           <Image
-            src={Image}
-            onClick={() => setActive(true)}
-            alt={'User'}
-            width={30}
-            height={30}
-            className='rounded-full cursor-pointer '
+            src={session.user.image}
+            width={100}
+            height={100}
+            title={session.user.name}
+            alt={session.user.name}
+            className='w-10 h-10  rounded-full object-cover'
           />
-          <div
-            onMouseEnter={() => setActive(true)}
-            onMouseLeave={() => setActive(false)}
-            className={`absolute -bottom-12 ${
-              active ? '' : 'hidden'
-            }  left-1/2 h-auto w-[70px] p-2 bg-white rounded-lg text-black`}
-          >
-            <button onClick={() => signOut()}>
-              <h1 className='text-xs text-center capitalize font-semibold'>
-                log Out
-              </h1>
-            </button>
-          </div>
+          <FaChevronCircleDown className='text-base bg-transparent text-white group-hover:rotate-180 duration-700' />
         </div>
-      </>
+        {active && (
+          <div
+            onClick={() => {
+              signOut()
+              setActive(false) // 2000 milliseconds delay (adjust as needed)
+            }}
+            className='px-2 py-1 absolute -left-4  bg-white -bottom-12  h-full inline-flex rounded  '
+          >
+            <h1 className='text-lg text-semibold'>SignOut</h1>
+          </div>
+        )}
+      </div>
     )
   } else {
     return (
-      <>
-       <Link href='/login'>
-            {' '}
-            <button className='md:inline-flex bg-white hidden  border hover:scale-[1.1] duration-700  p-2 rounded items-center gap-1'>
-              <span className='capitalize '>signIn</span>{' '}
-              <FaRegUser className='text-lg' />
-            </button>
-          </Link>
-      </>
+      <div>
+        <Link href='/login'>
+          {' '}
+          <button className='md:inline-flex bg-white hidden  border hover:scale-[1.1] duration-700  p-2 rounded items-center gap-1'>
+            <span className='capitalize '>signIn</span>{' '}
+            <FaRegUser className='text-lg' />
+          </button>
+        </Link>
+      </div>
     )
   }
 }
