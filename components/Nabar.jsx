@@ -12,15 +12,19 @@ const Nabar = () => {
   return (
     <div className='w-[90vw] h-20 mx-auto'>
       <div className='flex items-center py-2 justify-between'>
-        <div className='flex items-center gap-2'>
-          <Image
-            src={'/logo.png'}
-            width={100}
-            height={100}
-            className='w-12 h-12 aspect-square'
-            alt='logo'
-          />
-          <span className='text-base font-semibold text-white'>Snaplify</span>
+        {' '}
+        <div>
+          {' '}
+          <Link href='/' className='flex items-center gap-2'>
+            <Image
+              src={'/logo.png'}
+              width={100}
+              height={100}
+              className='w-12 h-12 aspect-square'
+              alt='logo'
+            />
+            <span className='text-base font-semibold text-white'>Snaplify</span>{' '}
+          </Link>
         </div>
         <div className='flex items-center gap-2'>
           <AuthComponent />

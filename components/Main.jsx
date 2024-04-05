@@ -4,10 +4,18 @@ import { HiOutlinePhoto } from 'react-icons/hi2'
 import { FaChevronDown } from 'react-icons/fa'
 import { GoVideo } from 'react-icons/go'
 import useGlobalContext from '@/context/Context'
+import { useState } from 'react'
 const Main = () => {
   const { setSearch, open, setOpen, text, setText, icon, setIcon } =
     useGlobalContext()
+  const [searchValue, setSearchValue] = useState('')
 
+  const handleEnterSearch = (e) => {
+    if (e.key === 'Enter') {
+      setSearchValue('')
+      setSearch(searchValue)
+    }
+  }
   return (
     <div className='overflow-x-hidden'>
       <div className='bg-[url(https://c4.wallpaperflare.com/wallpaper/533/163/784/digital-digital-art-artwork-illustration-minimalism-hd-wallpaper-preview.jpg)] bg-cover h-[60vh] bg-center absolute top-0 left-0 bg-black/50 -z-10 w-full bg-blend-overlay '></div>
@@ -23,7 +31,7 @@ const Main = () => {
                 onMouseLeave={() => {
                   setTimeout(() => {
                     setOpen(false)
-                  }, 1000)
+                  }, 5000)
                 }}
                 className='relative'
               >
@@ -82,14 +90,20 @@ const Main = () => {
                 type='text'
                 className='w-full focus:outline-none bg-white text-black p-2'
                 placeholder={`Search for ${text}`}
-                onChange={(e) => setSearch(e.target.value)}
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                onKeyDown={handleEnterSearch}
               />{' '}
-              <button className='p-2'>
+              <button
+                onClick={() => {
+                  setSearch(searchValue)
+                  setSearchValue('')
+                }}
+                disabled={!searchValue}
+                className='p-2'
+              >
                 {' '}
-                <FaSearch
-                  onClick={() => setSearch(text)}
-                  className='text-lg text-gray-500  hover:text-gray-600'
-                />
+                <FaSearch className='text-lg text-gray-500  hover:text-gray-600' />
               </button>
             </div>
           </div>

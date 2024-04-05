@@ -2,7 +2,8 @@
 import { useSession, signOut } from 'next-auth/react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { FaChevronCircleDown, FaRegUser } from 'react-icons/fa'
+import { IoChevronDownSharp } from 'react-icons/io5'
+import { FaRegUser } from 'react-icons/fa'
 import { useState } from 'react'
 const AuthComponent = () => {
   const [active, setActive] = useState(false)
@@ -25,9 +26,9 @@ const AuthComponent = () => {
             height={100}
             title={session.user.name}
             alt={session.user.name}
-            className='w-10 h-10  rounded-full object-cover'
+            className='w-8 h-8  rounded-full object-cover'
           />
-          <FaChevronCircleDown className='text-base bg-transparent text-white group-hover:rotate-180 duration-700' />
+          <IoChevronDownSharp className='text-base bg-transparent text-white group-hover:rotate-180 duration-700' />
         </div>
         {active && (
           <div
