@@ -1,15 +1,16 @@
-'use client'
 import Link from 'next/link'
 import SignInForm from './SignInForm'
-import { FaGoogle } from 'react-icons/fa'
-import { signIn } from 'next-auth/react'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import AuthButton from './AuthButton'
 
-const Login = () => {
-  const handleSignIn = async () => {
-    await signIn('google', {
-      callbackUrl: '/', // Redirect to home page after login
-    })
+const Login = async () => {
+  const session = await getServerSession()
+
+  if (session || session?.user) {
+    redirect('/')
   }
+
   return (
     <div className='flex items-center justify-center h-screen'>
       <div className='before:bg-[url(https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?t=st=1712118405~exp=1712122005~hmac=77bf6ea75e2ca39aa80fb9b054eb4c64428e835f09202d11dfda4499f363958a&w=900)]  before:absolute before:-z-10  before:top-0 before:left-0 before:bg-no-repeat before:bg-top before:h-screen h-screen before:w-full before:bg-blend-overlay  before:bg-black/30   before:bg-cover'>
@@ -27,18 +28,11 @@ const Login = () => {
               </Link>
             </p>{' '}
             <div className='relative pt-4'>
-              <hr className='pt-4 text-gray-600' />
               <h1 className='text-white p-[2px] backdrop-blur-sm bg-transparent z-50 text-base  text-center '>
                 or with in
               </h1>
             </div>
-            <button
-              onClick={handleSignIn}
-              className='flex w-full items-center bg-white font-semibold justify-center text-gray-800 p-2 rounded-md gap-3'
-            >
-              <FaGoogle className='text-xl' />{' '}
-              <span className=''>Continue with Google</span>
-            </button>
+            <AuthButton />
           </div>
         </div>
       </div>
