@@ -4,11 +4,18 @@ import { HiOutlinePhoto } from 'react-icons/hi2'
 import { FaChevronDown } from 'react-icons/fa'
 import { GoVideo } from 'react-icons/go'
 import useGlobalContext from '@/context/Context'
-import { useState } from 'react'
 const Main = () => {
-  const { setSearch, open, setOpen, text, setText, icon, setIcon } =
-    useGlobalContext()
-  const [searchValue, setSearchValue] = useState('')
+  const {
+    setSearch,
+    open,
+    setOpen,
+    text,
+    setText,
+    icon,
+    setIcon,
+    searchValue,
+    setSearchValue,
+  } = useGlobalContext()
 
   const handleEnterSearch = (e) => {
     if (e.key === 'Enter') {

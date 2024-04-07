@@ -14,6 +14,8 @@ export const AppProvider = ({ children}) => {
   const [error, setError] = useState(null)
   const [photos, setPhotos] = useState([])
   const [videos, setVideos] = useState([])
+  const [searchValue, setSearchValue] = useState('')
+
   const [open, setOpen] = useState(false)
    const [selectedImage, setSelectedImage] = useState(null)
    const [selectedVideo, setSelectedVideo] = useState(null)
@@ -85,6 +87,8 @@ export const AppProvider = ({ children}) => {
         setSelectedImage,
         selectedVideo,
         setSelectedVideo,
+        searchValue,
+    setSearchValue,
       }}
     >
      <div>{children}</div>

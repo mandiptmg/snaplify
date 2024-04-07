@@ -18,25 +18,41 @@ const BasicModal = () => {
       >
         <Box className='md:w-[80%] bg-black w-screen  max-w-full max-h-full h-[50vh] sm:h-[70vh]'>
           {text === 'photos' ? (
-            <Image
-              src={selectedImage}
-              width={100}
-              height={100}
-              className='w-full h-full object-contain  outline-none'
-              alt='modal'
-            />
+            <div className='w-full h-full relative'>
+              <button
+                onClick={() => window.open(selectedImage)}
+                className='text-base  text-white bg-sky-500 absolute right-0 -top-10 rounded py-1 px-2 font-medium'
+              >
+                Free download
+              </button>
+              <Image
+                src={selectedImage}
+                width={100}
+                height={100}
+                className='w-full h-full object-contain  outline-none'
+                alt='modal'
+              />
+            </div>
           ) : (
-            <video
-              width='320'
-              height='240'
-              className='h-full w-full'
-              autoPlay
-              controls
-            >
-              <source src={selectedVideo} type='video/mp4' />
-              <source src={selectedVideo} type='video/ogg' />
-              Your browser does not support the video tag.
-            </video>
+            <div className='w-full h-full relative'>
+              <button
+                onClick={() => window.open(selectedVideo)}
+                className='text-base  text-white bg-sky-500 absolute right-0 -top-10 rounded py-1 px-2 font-medium'
+              >
+                Free download
+              </button>
+              <video
+                width='320'
+                height='240'
+                className='h-full w-full'
+                autoPlay
+                controls
+              >
+                <source src={selectedVideo} type='video/mp4' />
+                <source src={selectedVideo} type='video/ogg' />
+                Your browser does not support the video tag.
+              </video>
+            </div>
           )}
           ;
         </Box>

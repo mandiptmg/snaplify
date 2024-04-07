@@ -19,9 +19,25 @@ import { FaDownload } from 'react-icons/fa6'
 import { HiOutlinePhoto } from 'react-icons/hi2'
 
 const Sidebar = () => {
-  const { setBar, bar, icon, setIcon, text, setText, setOpen, open } =
-    useGlobalContext()
-
+  const {
+    setBar,
+    bar,
+    icon,
+    setIcon,
+    setSearch,
+    text,
+    setText,
+    setOpen,
+    open,
+    searchValue,
+    setSearchValue,
+  } = useGlobalContext()
+  const handleEnterSearch = (e) => {
+    if (e.key === 'Enter') {
+      setSearchValue('')
+      setSearch(searchValue)
+    }
+  }
   return (
     <div>
       {bar && (
@@ -99,14 +115,21 @@ const Sidebar = () => {
                   type='text'
                   className='w-full focus:outline-none bg-white text-black p-2'
                   placeholder={`Search for ${text}`}
-                  onChange={(e) => setSearch(e.target.value)}
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  onKeyDown={handleEnterSearch}
                 />{' '}
-                <button className='p-2'>
+                <button
+                  onClick={() => {
+                    setSearch(searchValue)
+                    setSearchValue('')
+                    setBar(false)
+                  }}
+                  disabled={!searchValue}
+                  className='p-2'
+                >
                   {' '}
-                  <FaSearch
-                    onClick={() => setSearch(text)}
-                    className='text-lg text-gray-500  hover:text-gray-600'
-                  />
+                  <FaSearch className='text-lg text-gray-500  hover:text-gray-600' />
                 </button>
               </div>
             </div>
