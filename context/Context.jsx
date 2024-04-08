@@ -1,14 +1,14 @@
 // Import statements...
 'use client'
-import Spinner from '@/components/Spinner'
-import { createContext, useContext, useEffect, useState } from 'react'
-import { HiOutlinePhoto } from 'react-icons/hi2'
+import Spinner from "@/components/Spinner"
+import { createContext, useContext, useEffect, useState } from "react"
+import { HiOutlinePhoto } from "react-icons/hi2"
 
 const AppContext = createContext()
 
-export const AppProvider = ({ children }) => {
+export const AppProvider = ({ children}) => {
   const [search, setSearch] = useState('cat')
-  const [bar, setBar] = useState(false)
+    const [bar, setBar] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -17,8 +17,8 @@ export const AppProvider = ({ children }) => {
   const [searchValue, setSearchValue] = useState('')
 
   const [open, setOpen] = useState(false)
-  const [selectedImage, setSelectedImage] = useState(null)
-  const [selectedVideo, setSelectedVideo] = useState(null)
+   const [selectedImage, setSelectedImage] = useState(null)
+   const [selectedVideo, setSelectedVideo] = useState(null)
   const [text, setText] = useState('photos')
   const [icon, setIcon] = useState(
     <HiOutlinePhoto className='text-lg text-black' />
@@ -32,7 +32,8 @@ export const AppProvider = ({ children }) => {
       const options = {
         method: 'GET',
         headers: {
-          Authorization: process.env.PEXELS_API_KEY,
+          Authorization:
+            '6GmEK0bjcuQo9mJoqFoO66QYZc4ygHR6G7WzP03cC4Q21f8vxweRMnRG',
           'X-RapidAPI-Key':
             '030ca36729msh12d97486c647ffcp13d876jsn8be5417fcdfb',
           'X-RapidAPI-Host': 'PexelsdimasV1.p.rapidapi.com',
@@ -87,10 +88,10 @@ export const AppProvider = ({ children }) => {
         selectedVideo,
         setSelectedVideo,
         searchValue,
-        setSearchValue,
+    setSearchValue,
       }}
     >
-      <div>{children}</div>
+     <div>{children}</div>
     </AppContext.Provider>
   )
 }
