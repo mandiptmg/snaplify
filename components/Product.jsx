@@ -44,27 +44,29 @@ const Product = () => {
       </h1>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5'>
         {text === 'photos'
-          ? photos.map((photo) => (
-              <article key={photo.id}>
+          ? photos &&
+            photos.map((photo) => (
+              <article key={photo.thumbnail}>
                 <Image
-                  onClick={() => handleImageClick(photo.src.medium)}
-                  src={photo.src.large2x}
+                  onClick={() => handleImageClick(photo.thumbnail)}
+                  src={photo.thumbnail}
                   width={400}
                   height={400}
-                  className='cursor-pointer h-auto w-auto aspect-square rounded-md object-cover'
-                  alt={photo.alt}
+                  className='cursor-pointer aspect-square rounded-md object-cover'
+                  alt={photo.title}
                 />
               </article>
             ))
-          : videos.map((video) => (
-              <article key={video.id}>
+          : videos &&
+            videos.map((video) => (
+              <article key={video.content}>
                 <Image
-                  onClick={() => handleVideoClick(video.video_files[0].link)}
-                  src={video.image}
+                  onClick={() => handleVideoClick(video.embed_url)}
+                  src={video.images.large}
                   width={400}
                   height={400}
-                  className='cursor-pointer h-auto w-auto aspect-square  rounded-md object-cover'
-                  alt={video.user.name}
+                  className='cursor-pointer  aspect-square  rounded-md object-cover'
+                  alt={video.title}
                 />
               </article>
             ))}

@@ -1,14 +1,13 @@
-// Import statements...
 'use client'
-import Spinner from "@/components/Spinner"
-import { createContext, useContext, useEffect, useState } from "react"
-import { HiOutlinePhoto } from "react-icons/hi2"
-
+// import Spinner from '@/components/Spinner'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { HiOutlinePhoto } from 'react-icons/hi2'
+import axios from 'axios'
 const AppContext = createContext()
 
-export const AppProvider = ({ children}) => {
+export const AppProvider = ({ children }) => {
   const [search, setSearch] = useState('cat')
-    const [bar, setBar] = useState(false)
+  const [bar, setBar] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -17,8 +16,8 @@ export const AppProvider = ({ children}) => {
   const [searchValue, setSearchValue] = useState('')
 
   const [open, setOpen] = useState(false)
-   const [selectedImage, setSelectedImage] = useState(null)
-   const [selectedVideo, setSelectedVideo] = useState(null)
+  const [selectedImage, setSelectedImage] = useState(null)
+  const [selectedVideo, setSelectedVideo] = useState(null)
   const [text, setText] = useState('photos')
   const [icon, setIcon] = useState(
     <HiOutlinePhoto className='text-lg text-black' />
@@ -27,30 +26,53 @@ export const AppProvider = ({ children}) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const url = `https://pexelsdimasv1.p.rapidapi.com/v1/search?query=${search}&locale=en-US&per_page=15&page=1`
-      const url1 = `https://pexelsdimasv1.p.rapidapi.com/videos/search?query=${search}&per_page=15&page=1`
-      const options = {
-        method: 'GET',
+      const imageOptions = {
+        method: 'POST',
+        url: 'https://google-api31.p.rapidapi.com/imagesearch',
         headers: {
-          Authorization:
-            '6GmEK0bjcuQo9mJoqFoO66QYZc4ygHR6G7WzP03cC4Q21f8vxweRMnRG',
+          'content-type': 'application/json',
           'X-RapidAPI-Key':
             '030ca36729msh12d97486c647ffcp13d876jsn8be5417fcdfb',
-          'X-RapidAPI-Host': 'PexelsdimasV1.p.rapidapi.com',
+          'X-RapidAPI-Host': 'google-api31.p.rapidapi.com',
+        },
+        data: {
+          text: search,
+          safesearch: 'off',
+          region: 'wt-wt',
+          color: '',
+          size: '',
+          type_image: '',
+          layout: '',
+          max_results: 100,
+        },
+      }
+      const videoOptions = {
+        method: 'POST',
+        url: 'https://google-api31.p.rapidapi.com/videosearch',
+        headers: {
+          'content-type': 'application/json',
+          'X-RapidAPI-Key':
+            '030ca36729msh12d97486c647ffcp13d876jsn8be5417fcdfb',
+          'X-RapidAPI-Host': 'google-api31.p.rapidapi.com',
+        },
+        data: {
+          text: search,
+          safesearch: 'off',
+          timelimit: '',
+          duration: '',
+          resolution: '',
+          region: 'wt-wt',
+          max_results: 50,
         },
       }
 
       try {
-        const response = await fetch(url, options)
-        const response1 = await fetch(url1, options)
-
-        const result = await response.json()
-        const result1 = await response1.json()
-
-        setPhotos(result.photos)
-        setVideos(result1.videos)
-        console.log(result.photos)
-        console.log(result1.videos)
+        const imageResponse = await axios.request(imageOptions)
+        const videoResponse = await axios.request(videoOptions)
+        console.log(imageResponse.data)
+        setPhotos(imageResponse.data.result)
+        console.log(videoResponse.data)
+        setVideos(videoResponse.data.result)
       } catch (error) {
         console.error(error)
         setError(error.message) // Update error state with a meaningful message
@@ -88,10 +110,10 @@ export const AppProvider = ({ children}) => {
         selectedVideo,
         setSelectedVideo,
         searchValue,
-    setSearchValue,
+        setSearchValue,
       }}
     >
-     <div>{children}</div>
+      <div>{children}</div>
     </AppContext.Provider>
   )
 }
