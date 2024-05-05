@@ -28,7 +28,7 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const imageUrl = `https://api.unsplash.com/search/photos?page=3&query=${search}&client_id=5AnUxvk_GPhC-GgUKip30mMU5sMAYnwVVEqgUaNx3s4`
+      const imageUrl = `https://api.unsplash.com/search/photos?page=3&query=${search}&client_id=${process.env.NEXT_CLIENT_ID}`
       // const videoOptions = {
       //   method: 'POST',
       //   url: 'https://google-api31.p.rapidapi.com/videosearch',
