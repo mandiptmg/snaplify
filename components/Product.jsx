@@ -10,9 +10,9 @@ const Product = () => {
     text,
     setIsOpen,
     setSelectedImage,
-    setSelectedVideo,
+    // setSelectedVideo,
     photos,
-    videos,
+    // videos,
   } = useGlobalContext()
 
   const handleImageClick = (imageUrl) => {
@@ -20,10 +20,10 @@ const Product = () => {
     setIsOpen(true)
   }
 
-  const handleVideoClick = (videoUrl) => {
-    setSelectedVideo(videoUrl)
-    setIsOpen(true)
-  }
+  // const handleVideoClick = (videoUrl) => {
+  //   setSelectedVideo(videoUrl)
+  //   setIsOpen(true)
+  // }
 
   if (loading) {
     return <Spinner />
@@ -43,33 +43,39 @@ const Product = () => {
         Free stock {text}
       </h1>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5'>
-        {text === 'photos'
-          ? photos &&
+        {
+          text === 'photos' ? (
+            photos &&
             photos.map((photo) => (
-              <article key={photo.thumbnail}>
+              <article key={photo.alt_description}>
                 <Image
-                  onClick={() => handleImageClick(photo.thumbnail)}
-                  src={photo.thumbnail}
+                  onClick={() => handleImageClick(photo.urls.full)}
+                  src={photo.urls.full}
                   width={400}
                   height={400}
+                  loading='lazy'
                   className='cursor-pointer aspect-square rounded-md object-cover'
-                  alt={photo.title}
+                  alt={photo.alt_description}
                 />
               </article>
             ))
-          : videos &&
-            videos.map((video) => (
-              <article key={video.content}>
-                <Image
-                  onClick={() => handleVideoClick(video.embed_url)}
-                  src={video.images.large}
-                  width={400}
-                  height={400}
-                  className='cursor-pointer  aspect-square  rounded-md object-cover'
-                  alt={video.title}
-                />
-              </article>
-            ))}
+          ) : (
+            <div>sdf</div>
+          )
+          // : videos &&
+          //   videos.map((video) => (
+          //     <article key={video.content}>
+          //       <Image
+          //         onClick={() => handleVideoClick(video.embed_url)}
+          //         src={video.images.large}
+          //         width={400}
+          //         height={400}
+          //         className='cursor-pointer  aspect-square  rounded-md object-cover'
+          //         alt={video.title}
+          //       />
+          //     </article>
+          //   ))
+        }
       </div>
     </div>
   )

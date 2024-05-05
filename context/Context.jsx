@@ -12,7 +12,7 @@ export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [photos, setPhotos] = useState([])
-  const [videos, setVideos] = useState([])
+  // const [videos, setVideos] = useState([])
   const [searchValue, setSearchValue] = useState('')
 
   const [open, setOpen] = useState(false)
@@ -26,53 +26,35 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const imageOptions = {
-        method: 'POST',
-        url: 'https://google-api31.p.rapidapi.com/imagesearch',
-        headers: {
-          'content-type': 'application/json',
-          'X-RapidAPI-Key':
-            '030ca36729msh12d97486c647ffcp13d876jsn8be5417fcdfb',
-          'X-RapidAPI-Host': 'google-api31.p.rapidapi.com',
-        },
-        data: {
-          text: search,
-          safesearch: 'off',
-          region: 'wt-wt',
-          color: '',
-          size: '',
-          type_image: '',
-          layout: '',
-          max_results: 100,
-        },
-      }
-      const videoOptions = {
-        method: 'POST',
-        url: 'https://google-api31.p.rapidapi.com/videosearch',
-        headers: {
-          'content-type': 'application/json',
-          'X-RapidAPI-Key':
-            '030ca36729msh12d97486c647ffcp13d876jsn8be5417fcdfb',
-          'X-RapidAPI-Host': 'google-api31.p.rapidapi.com',
-        },
-        data: {
-          text: search,
-          safesearch: 'off',
-          timelimit: '',
-          duration: '',
-          resolution: '',
-          region: 'wt-wt',
-          max_results: 50,
-        },
-      }
+      const imageUrl =
+        `https://api.unsplash.com/search/photos?page=1&query=${search}&client_id=5AnUxvk_GPhC-GgUKip30mMU5sMAYnwVVEqgUaNx3s4`
+      // const videoOptions = {
+      //   method: 'POST',
+      //   url: 'https://google-api31.p.rapidapi.com/videosearch',
+      //   headers: {
+      //     'content-type': 'application/json',
+      //     'X-RapidAPI-Key':
+      //       '030ca36729msh12d97486c647ffcp13d876jsn8be5417fcdfb',
+      //     'X-RapidAPI-Host': 'google-api31.p.rapidapi.com',
+      //   },
+      //   data: {
+      //     text: search,
+      //     safesearch: 'off',
+      //     timelimit: '',
+      //     duration: '',
+      //     resolution: '',
+      //     region: 'wt-wt',
+      //     max_results: 50,
+      //   },
+      // }
 
       try {
-        const imageResponse = await axios.request(imageOptions)
-        const videoResponse = await axios.request(videoOptions)
-        console.log(imageResponse.data)
-        setPhotos(imageResponse.data.result)
-        console.log(videoResponse.data)
-        setVideos(videoResponse.data.result)
+        const imageResponse = await axios.request(imageUrl)
+        // const videoResponse = await axios.request(videoOptions)
+        console.log(imageResponse.data.results)
+        setPhotos(imageResponse.data.results)
+        // console.log(videoResponse.data)
+        // setVideos(videoResponse.data.result)
       } catch (error) {
         console.error(error)
         setError(error.message) // Update error state with a meaningful message
@@ -88,8 +70,8 @@ export const AppProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         search,
-        videos,
-        setVideos,
+        // videos,
+        // setVideos,
         photos,
         setPhotos,
         setSearch,
