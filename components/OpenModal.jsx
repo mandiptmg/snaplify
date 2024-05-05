@@ -7,6 +7,7 @@ const BasicModal = () => {
   const { isOpen, setIsOpen, selectedImage, text, selectedVideo } =
     useGlobalContext()
   const handleClose = () => setIsOpen(false)
+
   return (
     <div>
       <Modal
@@ -17,13 +18,13 @@ const BasicModal = () => {
         aria-describedby='modal-modal-description'
       >
         <Box className='md:w-[80%] overflow-hidden bg-black w-screen relative  max-w-full max-h-full h-[50vh] sm:h-[70vh]'>
-          {' '}
-          <button
-            onClick={() => window.open(selectedImage || selectedVideo)}
+          <a
+            href={selectedImage}
             className='text-base text-white bg-sky-500 absolute right-0 -top-30 rounded py-1 px-2 font-medium'
+            download='customFileName jpg' // Custom file name for downloading
           >
             Free download
-          </button>
+          </a>
           {text === 'photos' ? (
             <div className='w-full grid place-items-center h-full '>
               <Image

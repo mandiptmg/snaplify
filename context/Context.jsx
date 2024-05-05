@@ -6,7 +6,9 @@ import axios from 'axios'
 const AppContext = createContext()
 
 export const AppProvider = ({ children }) => {
-  const [search, setSearch] = useState('cat')
+  const [search, setSearch] = useState(
+    () => localStorage.getItem('search') || 'cat'
+  )
   const [bar, setBar] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -26,8 +28,7 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const imageUrl =
-        `https://api.unsplash.com/search/photos?page=3&query=${search}&client_id=5AnUxvk_GPhC-GgUKip30mMU5sMAYnwVVEqgUaNx3s4`
+      const imageUrl = `https://api.unsplash.com/search/photos?page=3&query=${search}&client_id=5AnUxvk_GPhC-GgUKip30mMU5sMAYnwVVEqgUaNx3s4`
       // const videoOptions = {
       //   method: 'POST',
       //   url: 'https://google-api31.p.rapidapi.com/videosearch',
@@ -62,6 +63,8 @@ export const AppProvider = ({ children }) => {
         setLoading(false)
       }
     }
+    // Store search in localStorage whenever it changes
+    localStorage.setItem('search', search)
 
     fetchData()
   }, [search])
