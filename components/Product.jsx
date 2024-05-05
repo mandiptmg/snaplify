@@ -55,7 +55,7 @@ const Product = () => {
                   height={400}
                   loading='lazy'
                   className='cursor-pointer aspect-square rounded-md object-cover'
-                  alt={photo.description}
+                  alt={photo.alt_description}
                 />
               </article>
             ))
