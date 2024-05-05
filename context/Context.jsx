@@ -63,10 +63,13 @@ export const AppProvider = ({ children }) => {
         setLoading(false)
       }
     }
-    // Store search in localStorage whenever it changes
-    localStorage.setItem('search', search)
 
     fetchData()
+  }, [search])
+
+  // Store search in localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('search', search)
   }, [search])
 
   return (
