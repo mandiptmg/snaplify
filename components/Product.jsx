@@ -42,7 +42,7 @@ const Product = () => {
       <h1 className='text-lg mt-1 font-bold text-gray-500'>
         Free stock {text}
       </h1>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5'>
+      <div className='grid grid-cols-1 place-items-center md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5'>
         {
           text === 'photos' ? (
             photos &&
@@ -55,7 +55,7 @@ const Product = () => {
                   height={400}
                   loading='lazy'
                   className='cursor-pointer aspect-square rounded-md object-cover'
-                  alt={photo.alt_descriptin}
+                  alt={photo.description}
                 />
               </article>
             ))
